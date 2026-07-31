@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirm order — NOVA STORE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="content">
+
+  <nav>
+    <a href="index.html" class="logo">NOVA<span>STORE</span></a>
+    <div class="links">
+      <a href="robux.html">Robux</a>
+      <a href="items.html">Items</a>
+      <div class="lang-wrap">
+        <button class="lang-btn" onclick="toggleLangMenu()" title="Change language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button onclick="setLanguage('en')">English</button>
+          <button onclick="setLanguage('es')">Español</button>
+          <button onclick="setLanguage('fr')">Français</button>
+          <button onclick="setLanguage('de')">Deutsch</button>
+          <button onclick="setLanguage('pt')">Português</button>
+          <button onclick="setLanguage('ar')">العربية</button>
+          <button onclick="setLanguage('hi')">हिन्दी</button>
+          <button onclick="setLanguage('zh-CN')">中文</button>
+          <button onclick="setLanguage('ja')">日本語</button>
+        </div>
+      </div>
+      <a href="info.html" class="info-icon" title="How it works & payment info">i</a>
+    </div>
+  </nav>
+  <div id="google_translate_element"></div>
+
+  <section id="confirm" style="padding-top:50px;">
+    <div class="section-head">
+      <div class="tag mono">After payment</div>
+      <h2>Confirm your order</h2>
+      <p>Only fill this in once you've actually sent the payment.</p>
+    </div>
+
+    <form id="orderForm">
+      <div class="field">
+        <label>What did you pay for<span class="required">*</span></label>
+        <input type="text" name="purchase" id="purchaseField" placeholder="e.g. 1,000 Robux, or item name" required>
+      </div>
+      <div class="field">
+        <label>Roblox username<span class="required">*</span></label>
+        <input type="text" name="roblox" placeholder="your Roblox username" required>
+      </div>
+      <div class="field">
+        <label>Discord tag<span class="required">*</span></label>
+        <input type="text" name="discord" placeholder="username" required>
+      </div>
+      <div class="field">
+        <label>Additional details</label>
+        <textarea name="notes" placeholder="optional"></textarea>
+      </div>
+      <div class="field">
+        <label>Proof of payment (screenshot)</label>
+        <input type="file" name="proof" accept="image/*">
+        <div class="hint">Attach a screenshot of the payment being sent. Optional but speeds things up.</div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-top:6px;">Send confirmation</button>
+      <div class="submit-status mono" id="submitStatus"></div>
+    </form>
+
+    <div class="ticket" id="ticket">
+      <div class="row"><div class="dot orange" id="ticketDot"></div><h3 id="ticketTitle">Payment is being confirmed</h3></div>
+      <p id="ticketText">Please wait — you don't have to stay on this page. As soon as your payment is confirmed, you'll receive your item.</p>
+      <div class="oid mono" id="ticketId"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>NOVASTORE — Robux and Roblox items</div>
+  </footer>
+
+</div>
+
+<script src="stars.js"></script>
+<script src="translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateInit"></script>
+<script>
+  // Prefill "what did you pay for" if arriving from a Pay Now button
+  const params = new URLSearchParams(window.location.search);
+  const item = params.get('item');
+  if (item) document.getElementById('purchaseField').value = item;
+
+  const WEBHOOK_URL = "PASTE_YOUR_DISCORD_WEBHOOK_URL_HERE";
+
+  document.getElementById('orderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('submitStatus');
+    const formEl = e.target;
+    const data = Object.fromEntries(new FormData(formEl).entries());
+    const fileInput = formEl.querySelector('input[type="file"]');
+    const file = fileInput.files[0];
+
+    if (WEBHOOK_URL.includes("PASTE_YOUR")) {
+      status.textContent = "Webhook not configured yet — edit WEBHOOK_URL in the script.";
+      status.style.color = "#e0a15a";
+      return;
+    }
+
+    status.textContent = "Sending confirmation...";
+    status.style.color = "#8f8f92";
+
+    const orderId = 'ORD-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+
+    const embed = {
+      embeds: [{
+        title: "New order confirmation",
+        color: 0xf2f2f0,
+        fields: [
+          { name: "Order ID", value: orderId, inline: true },
+          { name: "Purchase", value: data.purchase, inline: true },
+          { name: "Roblox username", value: data.roblox, inline: true },
+          { name: "Discord", value: data.discord, inline: true },
+          { name: "Additional details", value: data.notes || "none" }
+        ],
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    try {
+      let res;
+      if (file) {
+        const payload = new FormData();
+        payload.append('payload_json', JSON.stringify(embed));
+        payload.append('files[0]', file, file.name);
+        res = await fetch(WEBHOOK_URL, { method: "POST", body: payload });
+      } else {
+        res = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(embed)
+        });
+      }
+      if (res.ok) {
+        status.textContent = "";
+        formEl.style.display = 'none';
+        document.getElementById('ticket').classList.add('show');
+        document.getElementById('ticketId').textContent = orderId;
+      } else {
+        status.textContent = "Something went wrong sending the confirmation.";
+        status.style.color = "#e08a8a";
+      }
+    } catch (err) {
+      status.textContent = "Network error — try again.";
+      status.style.color = "#e08a8a";
+    }
+  });
+</script>
+</body>
+</html>
