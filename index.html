@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA STORE — Robux & Roblox items</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="content">
+
+  <nav>
+    <a href="index.html" class="logo">NOVA<span>STORE</span></a>
+    <div class="links">
+      <a href="robux.html">Robux</a>
+      <a href="items.html">Items</a>
+      <div class="lang-wrap">
+        <button class="lang-btn" onclick="toggleLangMenu()" title="Change language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button onclick="setLanguage('en')">English</button>
+          <button onclick="setLanguage('es')">Español</button>
+          <button onclick="setLanguage('fr')">Français</button>
+          <button onclick="setLanguage('de')">Deutsch</button>
+          <button onclick="setLanguage('pt')">Português</button>
+          <button onclick="setLanguage('ar')">العربية</button>
+          <button onclick="setLanguage('hi')">हिन्दी</button>
+          <button onclick="setLanguage('zh-CN')">中文</button>
+          <button onclick="setLanguage('ja')">日本語</button>
+        </div>
+      </div>
+      <a href="info.html" class="info-icon" title="How it works & payment info">i</a>
+    </div>
+  </nav>
+  <div id="google_translate_element"></div>
+
+  <div class="hero">
+    <div class="eyebrow mono">Direct from seller, no middleman</div>
+    <h1>Robux and items.<br>No <span class="out">markup</span> games.</h1>
+    <p>Fixed prices, straight from me to you. Pay once, confirm your order, get delivered. 1,000 Robux minimum.</p>
+    <div class="btn-row">
+      <a href="robux.html" class="btn btn-primary">Buy Robux</a>
+      <a href="items.html" class="btn btn-ghost">Browse items</a>
+    </div>
+  </div>
+
+  <section id="games">
+    <div class="section-head">
+      <div class="tag mono">Currently supported</div>
+      <h2>Supported games</h2>
+      <p>Starting with one game, more added as stock and demand grow.</p>
+    </div>
+    <div class="game-strip">
+      <div class="game-chip">
+        <div class="dot" style="background:#e0c15a; box-shadow:0 0 8px rgba(224,193,90,0.5);"></div>
+        <div>
+          <h3>Coming soon</h3>
+          <p>Game list being finalised</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>NOVASTORE — Robux and Roblox items</div>
+    <div style="margin-top:10px;"><a href="info.html">How it works & payment methods</a></div>
+  </footer>
+
+</div>
+
+<script src="stars.js"></script>
+<script src="translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateInit"></script>
+</body>
+</html>
