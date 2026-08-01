@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Info — NOVA STORE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="content">
+
+  <nav>
+    <a href="index.html" class="logo">NOVA<span>STORE</span></a>
+    <div class="links">
+      <a href="robux.html">Robux</a>
+      <a href="items.html">Items</a>
+      <div class="lang-wrap">
+        <button class="lang-btn" onclick="toggleLangMenu()" title="Change language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button onclick="setLanguage('en')">English</button>
+          <button onclick="setLanguage('es')">Español</button>
+          <button onclick="setLanguage('fr')">Français</button>
+          <button onclick="setLanguage('de')">Deutsch</button>
+          <button onclick="setLanguage('pt')">Português</button>
+          <button onclick="setLanguage('ar')">العربية</button>
+          <button onclick="setLanguage('hi')">हिन्दी</button>
+          <button onclick="setLanguage('zh-CN')">中文</button>
+          <button onclick="setLanguage('ja')">日本語</button>
+        </div>
+      </div>
+      <a href="info.html" class="info-icon" title="How it works & payment info">i</a>
+    </div>
+  </nav>
+  <div id="google_translate_element"></div>
+
+  <section id="how" style="padding-top:50px;">
+    <div class="section-head">
+      <div class="tag mono">Walkthrough</div>
+      <h2>How it actually works</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n mono">1</div>
+        <div>
+          <h3>Pick a package or item</h3>
+          <p>Tap "Pay now" on whatever you want — it opens your own banking app with the payment prefilled.</p>
+          <div class="stat mono">STATUS: link opened</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n mono">2</div>
+        <div>
+          <h3>Send the payment</h3>
+          <p>Confirm and send from your banking app. UK payments land instantly, international ones a little slower — see payment methods below.</p>
+          <div class="stat mono">STATUS: paid</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n mono">3</div>
+        <div>
+          <h3>Confirm the order</h3>
+          <p>Fill in the form below with your Roblox username and what you paid for, so I know it's you.</p>
+          <div class="stat mono">STATUS: confirmed</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n mono">4</div>
+        <div>
+          <h3>Delivery</h3>
+          <p>Robux sent via gamepass/group payout, items sent via trade — usually same day.</p>
+          <div class="stat mono">STATUS: delivered</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="payments">
+    <div class="section-head">
+      <div class="tag mono">Accepted worldwide</div>
+      <h2>Payment methods</h2>
+      <p>One method for now, works for UK and international buyers.</p>
+    </div>
+    <div class="pay-grid">
+      <div class="pay-card">
+        <h3>UK bank transfer (Monzo)</h3>
+        <p>Instant via Faster Payments straight from your banking app — also accepts Apple Pay, Google Pay, and debit/credit card if you don't have a Monzo account. Tap "Pay now" and it's prefilled for you.</p>
+        <span class="tagline mono">Arrives instantly</span>
+      </div>
+      <div class="pay-card">
+        <h3>Revolut</h3>
+        <p>Instant payment link, works the same way as the Monzo option.</p>
+        <span class="tagline mono">Arrives instantly</span>
+      </div>
+      <div class="pay-card">
+        <h3>PayPal (Friends & Family)</h3>
+        <p>Recommended option. Send to the handle shown after clicking "Pay now," Friends & Family only. Requires a screen recording of the whole payment as proof — a screenshot isn't accepted.</p>
+        <span class="tagline mono">Video proof required</span>
+      </div>
+    </div>
+
+    <div class="disclaimer" style="margin-top:30px;">
+      <strong>All purchases are final and non-refundable.</strong> Double-check what you're ordering before paying.
+    </div>
+  </section>
+
+  <footer>
+    <div>NOVASTORE — Robux and Roblox items</div>
+    <div style="margin-top:10px;">Already paid? <a href="order.html">Confirm your order</a></div>
+  </footer>
+
+</div>
+
+<script src="stars.js"></script>
+<script src="translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateInit"></script>
+</body>
+</html>
